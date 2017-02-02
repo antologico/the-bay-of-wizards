@@ -80,8 +80,8 @@ class Player extends GameElement {
       }
     }
 
-    this.rotatingX = this.rotatingDegree * 10;
-    this.rotatingY = -this.rotatingX;
+    this.rotatingX = 0;
+    this.rotatingY = 0;
   }
 
   testCollision(item) {

@@ -40,7 +40,17 @@ class Game {
       for(var i = 0; i < this.elements.length; i++) {
         html += this.elements[i].draw();
       }
+
+      html += this.drawPlayerLive();
+
       this.scene.innerHTML = html;
+  }
+
+  drawPlayerLive() {
+      let live = parseInt((1000 - (this.collisions * 5)) / 10);
+      live = live > 0 ? live : 0
+      return ('<text width="300" text-align="center" y="70" text-anchor="middle" x="' + parseInt(this.scene.clientWidth/2) +'"' +
+        'font-family="Russo One" fill="#FFFFFF" font-size="55">' + live + '%</text>');
   }
 
   frameFunction() {
