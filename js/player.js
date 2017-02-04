@@ -3,10 +3,13 @@ class Player extends GameElement {
     super(scene);
     this.widthBase  = 400;
     this.heightBase = 250;
+    this.heightMin  = 100;
     this.collision = false;
     this.state = 0;
     this.loadSprites();
     this.loaded = true;
+    this.items = 0;
+    this.live = 100;
     this.moving = null;
     this.initPostion();
   }
@@ -84,36 +87,34 @@ class Player extends GameElement {
     this.rotatingY = 0;
   }
 
-  testCollision(item) {
 
-    const radius = 50;
-    if (((this.gameX - radius) < item.gameX) &&
-        ((this.gameX + radius) > item.gameX) &&
-        ((this.gameY + radius) > item.gameY) &&
-        ((this.gameY - radius) < item.gameY))
-        {
-            return (item.height >= this.z + this.height/2);
-        }
-
-    return false;
+  testCollisionAxis(i1, i2, j1, j2) {
+      return ((i1 >= j1) && (i1 <= j2)) || ((i2 >= j1) && (i2 <= j2)) ||
+             ((j1 >= i1) && (j1 <= i2)) || ((j2 >= i1) && (j2 <= i2));
   }
 
-  drawShadow() {
-    const width = parseInt(this.width/3),
-          offset = parseInt(this.width/5),
-          height = parseInt(this.width/10);
-    return '<path d="M' + (this.shadowX + offset) +',' + (this.shadowY - 15) +
-      ' l' + width + ',' + height +
-      ' ' + width + ',-' + height +
-      ' -' + width + ',-' + height +
-      ' -' + width + ',' + height +
-      '" style="fill:#052e38"/>';
+  testCollision(item) {
+    const radius = 5,
+          white_space = 100;
+    return this.testCollisionAxis(
+            this.gameX,
+            this.gameX + (this.width/2), // for white space
+            item.gameX,
+            item.gameX + item.width) &&
+          this.testCollisionAxis(
+            this.gameY - radius,
+            this.gameY + radius,
+            item.gameY,
+            item.gameY) &&
+          this.testCollisionAxis(
+            this.z,
+            this.z + this.height,
+            item.z,
+            item.z + item.height);
   }
 
   updatePosition() {
     let state = 0;
-    this.height = parseInt(100 + (this.gameY * 0.5));
-    this.width = parseInt(this.widthBase * this.height / this.heightBase);
 
     if (this.collision) {
       this.image = this.sprites['collision'];
