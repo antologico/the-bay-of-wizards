@@ -13,6 +13,7 @@ class Game {
     this.collisions = 0;
     this.maxFrames = 3200; // 2 minutes
     this.frame = 0;
+    this.finished = false;
     this.gameSpeed = 0;
   }
 
@@ -33,6 +34,7 @@ class Game {
   }
 
   drawElements() {
+    if (!this.finished) {
       let html = "";
       for(var i = 0; i < this.elements.length; i++) {
         html += this.elements[i].drawShadow();
@@ -47,6 +49,7 @@ class Game {
       html += this.drawPlayerLive() + this.drawPlayerItems();
 
       this.scene.innerHTML = html;
+    }
   }
 
   drawPlayerLive() {
@@ -61,65 +64,82 @@ class Game {
         'font-family="Russo One" fill="#FFFF00" font-size="20">&#9830; ' + this.player.items + '</text>');
   }
 
+  movePlayer() {
+    if (this.gameKeys[0]) {
+        this.moveLeft();
+    }
+    if (this.gameKeys[1]) {
+        this.moveUp();
+    }
+    if (this.gameKeys[2]) {
+        this.moveRight();
+    }
+    if (this.gameKeys[3]) {
+        this.moveDown();
+    }
+
+    this.player.moveJump(this.gameKeys[4]);
+  }
+
+
+  shortElements() {
+    this.elements.sort(function(a, b) {
+      return a.gameY >= b.gameY;
+    });
+    for(var i = 0; i < this.decorations.length; i++) {
+      this.decorations[i].update(this.gameSpeed);
+    }
+  }
+
+
+  detectCollisions()
+  {
+    let collision = false;
+
+    for(var i = 0; i < this.elements.length; i++) {
+      const el = this.elements[i];
+      if ((el.type == "obstacle") && !collision) {
+        collision = this.player.testCollision(el);
+        if (collision) {
+          this.player.live --;
+        }
+      }
+      if ((el.type == "item")) {
+        if (this.player.testCollision(el) && !el.recolected) {
+          el.recolected = true;
+          this.player.items ++;
+        }
+      }
+      el.update(this.gameSpeed);
+    }
+
+    this.player.moving = null;
+    this.player.collision = collision;
+  }
+
   frameFunction() {
 
-      if (this.gameKeys[0]) {
-          this.moveLeft();
-      }
-      if (this.gameKeys[1]) {
-          this.moveUp();
-      }
-      if (this.gameKeys[2]) {
-          this.moveRight();
-      }
-      if (this.gameKeys[3]) {
-          this.moveDown();
-      }
+    if (!this.finished) {
+      this.movePlayer();
+      this.shortElements();
 
-      this.player.moveJump(this.gameKeys[4]);
-
-      this.elements.sort(function(a, b) {
-        return a.gameY >= b.gameY;
-      });
-      for(var i = 0; i < this.decorations.length; i++) {
-        this.decorations[i].update(this.gameSpeed);
-      }
-
-      let collision = false;
-
-      for(var i = 0; i < this.elements.length; i++) {
-        const el = this.elements[i];
-        if ((el.type == "obstacle") && !collision) {
-          collision = this.player.testCollision(el);
-          if (collision) {
-            this.player.live --;
-          }
-        }
-        if ((el.type == "item")) {
-          if (this.player.testCollision(el) && !el.recolected) {
-            el.recolected = true;
-            this.player.items ++;
-          }
-        }
-        el.update(this.gameSpeed);
-      }
+      this.detectCollisions();
 
       if (this.frame < 100) {
         this.gameSpeed = this.gameSpeed < 1 ? this.gameSpeed + 0.01 : 1;
       } else if (this.frame > this.maxFrames - 200) {
-        this.gameSpeed = this.gameSpeed > 0 ? this.gameSpeed - 0.020 : 0;
+        this.gameSpeed = this.gameSpeed > 0 ? this.gameSpeed - 0.02 : 0;
       } else {
         this.gameSpeed = parseFloat(1 + (2 * this.frame / (this.maxFrames-200))).toFixed(2); // Max 3
       }
-
-      this.player.moving = null;
-      this.player.collision = collision;
       this.frame ++;
+    }
 
-      // 4 minutes
-      if ((this.frame > this.maxFrames) || (this.player.live <= 0)) {
-        this.finish();
-      }
+    // 4 minutes
+    if ((this.frame > this.maxFrames) || (this.player.live <= 0)) {
+      this.finish();
+      console.log("end!");
+    }
   }
 
   keyDown(e) {
@@ -151,6 +171,7 @@ class Game {
   }
 
   finish() {
+    this.finished = true;
     clearInterval(this.drawElementsInterval);
     clearInterval(this.frameFunctionInterval);
     if (!this.testObjectives()) {
@@ -194,6 +215,7 @@ class Game {
     for (let i=0; i<20; i++) {
       this.decorations.push(new WaterShine(this.scene));
     }
+    this.decorations.push(new Bridge(this.scene, this.maxFrames));
 
     console.log('init', this.scene.clientWidth + 'x' + this.scene.clientHeight);
 
@@ -203,7 +225,8 @@ class Game {
   }
 
   startGame() {
-    this.frameFunctionInterval = setInterval(this.frameFunction.bind(this), 1000 / this.framesXsecond);
-    this.drawElementsInterval = setInterval(this.drawElements.bind(this), 1000 / this.framesXsecond);
+    const seconds = 1000 / this.framesXsecond;
+    this.frameFunctionInterval = setInterval(this.frameFunction.bind(this), seconds);
+    this.drawElementsInterval = setInterval(this.drawElements.bind(this), seconds);
   }
 }

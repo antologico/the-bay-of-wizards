@@ -15,7 +15,9 @@ class Stone extends GameElement {
     this.gameY = parseInt(Math.random() * 380);
   }
 
-  drawShadow() {}
+  drawShadow() {
+    return '';
+  }
 
   updatePosition() {
     if (this.gameX > -this.width) {
