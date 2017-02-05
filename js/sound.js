@@ -34,4 +34,4 @@ function Sound(source,volume,loop)
     }
 }
 var foo=new Sound("sound/ost.mp3",10,true);
-foo.start();
+//foo.start();

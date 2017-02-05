@@ -4,14 +4,9 @@ class Player extends GameElement {
     this.widthBase  = 400;
     this.heightBase = 250;
     this.heightMin  = 100;
-    this.collision = false;
-    this.state = 0;
     this.loadSprites();
-    this.loaded = true;
-    this.items = 0;
-    this.live = 100;
-    this.moving = null;
     this.initPostion();
+    this.loaded = true;
   }
 
   loadSprites() {
@@ -28,9 +23,13 @@ class Player extends GameElement {
   }
 
   initPostion() {
+    this.state = 0;
+    this.moving = null;
+    this.collision = false;
+    this.live = 100;
+    this.items = 0;
     this.gameX = this.scene.clientWidth/2;
     this.gameY = 100;
-    this.update();
   }
 
   moveLeft() {

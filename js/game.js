@@ -1,19 +1,20 @@
 class Game {
 
   constructor(elementId) {
-    this.scene = document.getElementById(elementId);
+    this.scene = new Scene(document.getElementById(elementId));
+    this.maxWidth =
     this.elements = [];
     this.decorations = [];
     this.prevElements = [];
     this.framesXsecond = 30;
-    this.interval = null;
+    this.frameFunctionInterval = null;
+    this.drawElementsInterval = null;
     this.gameKeys = [null, null, null, null];
-    this.drawFuntion = null;
-    this.printing = false;
     this.collisions = 0;
     this.maxFrames = 3200; // 2 minutes
     this.frame = 0;
     this.finished = false;
+    this.itemsMin = 40;
     this.gameSpeed = 0;
   }
 
@@ -48,7 +49,7 @@ class Game {
 
       html += this.drawPlayerLive() + this.drawPlayerItems();
 
-      this.scene.innerHTML = html;
+      this.scene.draw(html);
     }
   }
 
@@ -56,12 +57,13 @@ class Game {
       let live = this.player.live;
       live = live > 0 ? live : 0
       return ('<text width="300" text-align="center" y="55" text-anchor="middle" x="' + parseInt(this.scene.clientWidth/2) +'"' +
-        'font-family="Russo One" fill="#FFFFFF" font-size="50">' + live + '%</text>');
+        'font-family="Montserrat Alternates" fill="#FFFFFF" font-size="50">' + live +
+        '<tspan font-size="40">&hearts;</tspan></text>');
   }
 
   drawPlayerItems() {
       return ('<text width="300" text-align="center" y="80" text-anchor="middle" x="' + parseInt(this.scene.clientWidth/2) +'"' +
-        'font-family="Russo One" fill="#FFFF00" font-size="20">&#9830; ' + this.player.items + '</text>');
+        'font-family="Montserrat Alternates" fill="#FFFF00" font-size="20">&#9830;' + this.player.items + '</text>');
   }
 
   movePlayer() {
@@ -101,7 +103,7 @@ class Game {
       if ((el.type == "obstacle") && !collision) {
         collision = this.player.testCollision(el);
         if (collision) {
-          this.player.live --;
+          this.player.live -= 2;
         }
       }
       if ((el.type == "item")) {
@@ -122,7 +124,6 @@ class Game {
     if (!this.finished) {
       this.movePlayer();
       this.shortElements();
-
       this.detectCollisions();
 
       if (this.frame < 100) {
@@ -136,9 +137,8 @@ class Game {
     }
 
     // 4 minutes
-    if ((this.frame > this.maxFrames) || (this.player.live <= 0)) {
+    if ((this.frame > this.maxFrames) || (this.player.live < 0)) {
       this.finish();
-      console.log("end!");
     }
   }
 
@@ -147,27 +147,33 @@ class Game {
   }
 
   keyUp(e) {
-    this.setKeyValue(e.keyCode, null);
+    if (!this.finished) {
+      this.setKeyValue(e.keyCode, null);
+    } else {
+      if (e.keyCode == 13) {
+        this.startGame();
+      }
+    }
   }
 
   setKeyValue(key, value) {
-    switch (key) {
-      case 37: // Left
-        this.gameKeys[0] = value;
-        break;
-      case 38: // Up
-        this.gameKeys[1] = value;
-        break;
-      case 39: // Right
-        this.gameKeys[2] = value;
-        break;
-      case 40: // Down
-        this.gameKeys[3] = value;
-        break;
-      case 32: // Space
-        this.gameKeys[4] = value;
-        break;
-    }
+      switch (key) {
+        case 37: // Left
+          this.gameKeys[0] = value;
+          break;
+        case 38: // Up
+          this.gameKeys[1] = value;
+          break;
+        case 39: // Right
+          this.gameKeys[2] = value;
+          break;
+        case 40: // Down
+          this.gameKeys[3] = value;
+          break;
+        case 32: // Space
+          this.gameKeys[4] = value;
+          break;
+      }
   }
 
   finish() {
@@ -175,26 +181,33 @@ class Game {
     clearInterval(this.drawElementsInterval);
     clearInterval(this.frameFunctionInterval);
     if (!this.testObjectives()) {
-      this.scene.innerHTML += this.drawYouLoseTitle();
+      this.scene.add(this.drawYouLoseTitle());
     } else {
-      this.scene.innerHTML += this.drawYouWinTitle();
+      this.scene.add(this.drawYouWinTitle());
     }
   }
 
   drawYouLoseTitle() {
-    return ('<text width="300" text-align="center" y="430" text-anchor="middle" ' +
+    const subtitle = 'Press enter to try again' + (this.frame >= this.maxFrames ? '. You need at last ' + this.itemsMin + ' jewels' : '');
+
+    return ('<text width="300" text-align="center" y="410" text-anchor="middle" ' +
       'x="' + parseInt(this.scene.clientWidth/2) +'"' +
-      'font-family="Russo One" fill="#FF0000" stroke="#A00000" stroke-width="1" font-size="100">YOU LOOSE!</text>');
+      'font-family="Montserrat Alternates" fill="#FF0000" stroke="#A00000" stroke-width="1" font-size="100">YOU LOSE!</text>'+
+      '<text width="300" text-align="center" y="450" text-anchor="middle" ' +
+        'x="' + parseInt(this.scene.clientWidth/2) +'"' +
+        'font-family="Montserrat Alternates" fill="#FFFF00" stroke="#A0A000" stroke-width="1" font-size="22">' +
+        subtitle +
+        '</text>');
   }
 
   drawYouWinTitle() {
     return ('<text width="300" text-align="center" y="430" text-anchor="middle" ' +
       'x="' + parseInt(this.scene.clientWidth/2) +'"' +
-      'font-family="Russo One" fill="#40FF40" stroke="#00A000" stroke-width="1" font-size="100">YOU WIN!</text>');
+      'font-family="Montserrat Alternates" fill="#40FF40" stroke="#00A000" stroke-width="1" font-size="100">YOU WIN!</text>');
   }
 
   testObjectives() {
-    return (this.player.live > 0) && (this.player.items >= 40);
+    return (this.player.live > 0) && (this.player.items >= this.itemsMin);
   }
 
   init() {
@@ -225,7 +238,19 @@ class Game {
   }
 
   startGame() {
+
     const seconds = 1000 / this.framesXsecond;
+    this.frame = 0;
+    this.finished = false;
+    this.gameKeys = [null, null, null, null];
+
+    for(var i = 0; i < this.elements.length; i++) {
+      this.elements[i].initPostion();
+    }
+    for(var i = 0; i < this.decorations.length; i++) {
+      this.decorations[i].initPostion();
+    }
+
     this.frameFunctionInterval = setInterval(this.frameFunction.bind(this), seconds);
     this.drawElementsInterval = setInterval(this.drawElements.bind(this), seconds);
   }

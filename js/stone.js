@@ -2,7 +2,7 @@ class Stone extends GameElement {
   constructor(scene, type) {
     super(scene);
     this.type="obstacle";
-    this.image = this.loadSprite('images/stone/stone' + type +'.png');
+    this.image = this.loadSprite('images/stone/stone' + type +'.svg');
     this.widthBase  = 256;
     this.heightBase = 256;
     this.heightMin  = 80;

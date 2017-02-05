@@ -41,7 +41,7 @@ class GameElement {
     this.updatePosition();
     this.height = parseInt(this.heightMin + (this.gameY * 0.3));
     this.width = parseInt(this.widthBase * this.height / this.heightBase);
-    this.gameSpeed = gameSpeed;
+    this.gemeSpeed = gameSpeed;
   }
 
   drawShadow() {
@@ -61,9 +61,11 @@ class GameElement {
     return '<image ' +
       'x="' + this.x + '" ' +
       'y="' + (this.y - this.z) + '" ' +
+      'z=1 ' +
       (this.rotatingDegree ?
         'transform="rotate(' + this.rotatingDegree + ') translate(' + this.rotatingX + ' ' + this.rotatingY + ')" ' : '') +
       'height="' + this.height + '" ' +
+      'width="' + this.width + '" ' +
       'xlink:href="' + this.image.src + '" />';
   }
 }
