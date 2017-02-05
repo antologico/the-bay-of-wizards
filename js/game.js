@@ -1,6 +1,7 @@
 class Game {
 
-  constructor(elementId) {
+  constructor(elementId, coverId) {
+    this.cover = document.getElementById(coverId);
     this.scene = new Scene(document.getElementById(elementId));
     this.maxWidth =
     this.elements = [];
@@ -13,7 +14,7 @@ class Game {
     this.collisions = 0;
     this.maxFrames = 3200; // 2 minutes
     this.frame = 0;
-    this.finished = false;
+    this.finished = true;
     this.itemsMin = 40;
     this.gameSpeed = 0;
   }
@@ -234,11 +235,11 @@ class Game {
 
     window.addEventListener("keydown", this.keyDown.bind(this), false);
     window.addEventListener("keyup", this.keyUp.bind(this), false);
-    this.startGame();
   }
 
   startGame() {
 
+    this.cover.parentNode.removeChild(this.cover);
     const seconds = 1000 / this.framesXsecond;
     this.frame = 0;
     this.finished = false;

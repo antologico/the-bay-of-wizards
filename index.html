@@ -22,6 +22,7 @@ html, body {
 .container {
   border-radius: 50%;
   width:800px;
+  height: 800px;
   overflow: hidden;
   position: absolute;
   left: calc(50% - 400px);
@@ -41,8 +42,8 @@ body {
 </style>
 <body>
   <div class="container">
-    <svg type="image/svg+xml"
-    id="scene"></svg>
+    <img src="images/cover.jpg" id="cover"></svg>
+    <svg type="image/svg+xml" id="scene"></svg>
   </div>
 </body>
 <script language="javascript" src="js/scene.js"></script>
@@ -56,7 +57,7 @@ body {
 <script language="javascript" src="js/game.js"></script>
 <script language="javascript" src="js/sound.js"></script>
 <script>
-  const game = new Game('scene');
+  const game = new Game('scene', 'cover');
   game.init();
 </script>
 </html>
