@@ -1,7 +1,7 @@
 class Bridge extends GameElement {
   constructor(scene, maxFrameToCenter) {
     super(scene);
-    this.image = this.loadSprite('images/bridge.png');
+    this.image = this.loadSprite('images/bridge.svg');
     this.heightBase = 2;
     this.transparent = 0
     this.length = maxFrameToCenter;

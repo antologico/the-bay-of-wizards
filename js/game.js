@@ -12,7 +12,7 @@ class Game {
     this.drawElementsInterval = null;
     this.gameKeys = [null, null, null, null];
     this.collisions = 0;
-    this.maxFrames = 3200; // 2 minutes
+    this.maxFrames = 320; // 2 minutes
     this.frame = 0;
     this.finished = true;
     this.itemsMin = 40;
@@ -238,7 +238,7 @@ class Game {
 
   startGame() {
 
-    this.cover.parentNode.removeChild(this.cover);
+    this.cover.parentNode && this.cover.parentNode.removeChild(this.cover);
     const seconds = 1000 / this.framesXsecond;
     this.frame = 0;
     this.finished = false;

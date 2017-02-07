@@ -2,7 +2,7 @@ class Obstacle extends GameElement {
   constructor(scene, type) {
     super(scene);
     this.type="obstacle";
-    this.image = this.loadSprite('images/totem/totem' +type +'.png');
+    this.image = this.loadSprite('images/totem/totem' +type +'.svg');
     this.widthBase  = 170;
     this.heightBase = 1024;
     this.initPostion();
