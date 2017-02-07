@@ -115,7 +115,6 @@ class Game {
       }
       el.update(this.gameSpeed);
     }
-
     this.player.moving = null;
     this.player.collision = collision;
   }
@@ -132,7 +131,7 @@ class Game {
       } else if (this.frame > this.maxFrames - 200) {
         this.gameSpeed = this.gameSpeed > 0 ? this.gameSpeed - 0.02 : 0;
       } else {
-        this.gameSpeed = parseFloat(1 + (2 * this.frame / (this.maxFrames-200))).toFixed(2); // Max 3
+        this.gameSpeed = parseFloat(1 + (3 * this.frame / (this.maxFrames-200))).toFixed(2); // Max 3
       }
       this.frame ++;
     }
@@ -193,10 +192,10 @@ class Game {
 
     return ('<text width="300" text-align="center" y="410" text-anchor="middle" ' +
       'x="' + parseInt(this.scene.clientWidth/2) +'"' +
-      'font-family="Montserrat Alternates" fill="#FF0000" stroke="#A00000" stroke-width="1" font-size="100">YOU LOSE!</text>'+
+      'font-family="Montserrat Alternates" fill="#FF0000" stroke="#A00000" stroke-width="1" font-size="80">YOU LOSE!</text>'+
       '<text width="300" text-align="center" y="450" text-anchor="middle" ' +
         'x="' + parseInt(this.scene.clientWidth/2) +'"' +
-        'font-family="Montserrat Alternates" fill="#FFFF00" stroke="#A0A000" stroke-width="1" font-size="22">' +
+        'font-family="Montserrat Alternates" fill="#FFFFFF" stroke="#AAAAAA" stroke-width="1" font-size="25">' +
         subtitle +
         '</text>');
   }
@@ -204,7 +203,7 @@ class Game {
   drawYouWinTitle() {
     return ('<text width="300" text-align="center" y="430" text-anchor="middle" ' +
       'x="' + parseInt(this.scene.clientWidth/2) +'"' +
-      'font-family="Montserrat Alternates" fill="#40FF40" stroke="#00A000" stroke-width="1" font-size="100">YOU WIN!</text>');
+      'font-family="Montserrat Alternates" fill="#40FF40" stroke="#00A000" stroke-width="1" font-size="80">YOU WIN!</text>');
   }
 
   testObjectives() {
@@ -243,6 +242,7 @@ class Game {
     const seconds = 1000 / this.framesXsecond;
     this.frame = 0;
     this.finished = false;
+    this.gameSpeed = 0;
     this.gameKeys = [null, null, null, null];
 
     for(var i = 0; i < this.elements.length; i++) {

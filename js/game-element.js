@@ -41,7 +41,7 @@ class GameElement {
     this.updatePosition();
     this.height = parseInt(this.heightMin + (this.gameY * 0.3));
     this.width = parseInt(this.widthBase * this.height / this.heightBase);
-    this.gemeSpeed = gameSpeed;
+    this.gameSpeed = gameSpeed;
   }
 
   drawShadow() {
