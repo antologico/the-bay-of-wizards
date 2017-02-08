@@ -30,6 +30,7 @@ class Player extends GameElement {
     this.items = 0;
     this.gameX = this.scene.clientWidth/2;
     this.gameY = 100;
+    this.z = 400;
   }
 
   moveLeft() {

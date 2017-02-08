@@ -1,0 +1,53 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.toFadeOut {
+    -webkit-animation: fadeout 3s linear forwards;
+    animation: fadeout 3s linear forwards;
+}
+
+@-webkit-keyframes fadeout {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes fadeout {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+#scene {
+  background-image: url(../images/background.svg);
+  background-repeat: no-repeat;
+  background-position: top left;
+  position: absolute;
+}
+
+#cover {
+  position: absolute;
+}
+
+.container {
+  border-radius: 50%;
+  width:800px;
+  height: 800px;
+  overflow: hidden;
+  position: absolute;
+  left: calc(50% - 400px);
+  top: calc(50% - 400px);
+  text-align: left;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  overflow: hidden;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}

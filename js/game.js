@@ -12,10 +12,11 @@ class Game {
     this.drawElementsInterval = null;
     this.gameKeys = [null, null, null, null];
     this.collisions = 0;
-    this.maxFrames = 320; // 2 minutes
+    this.maxFrames = 3200; // 2 minutes
     this.frame = 0;
     this.finished = true;
-    this.itemsMin = 40;
+    this.itemsMin = 50;
+    this.started = false;
     this.gameSpeed = 0;
   }
 
@@ -58,13 +59,13 @@ class Game {
       let live = this.player.live;
       live = live > 0 ? live : 0
       return ('<text width="300" text-align="center" y="55" text-anchor="middle" x="' + parseInt(this.scene.clientWidth/2) +'"' +
-        'font-family="Montserrat Alternates" fill="#FFFFFF" font-size="50">' + live +
+        'font-family="Montserrat Alternates" fill="#FFFFFF" font-size="45">' + live +
         '<tspan font-size="40">&hearts;</tspan></text>');
   }
 
   drawPlayerItems() {
       return ('<text width="300" text-align="center" y="80" text-anchor="middle" x="' + parseInt(this.scene.clientWidth/2) +'"' +
-        'font-family="Montserrat Alternates" fill="#FFFF00" font-size="20">&#9830;' + this.player.items + '</text>');
+        'font-family="Montserrat Alternates" fill="#FFFF00" font-size="20">&#9830; ' + this.player.items + ' / 50</text>');
   }
 
   movePlayer() {
@@ -131,7 +132,7 @@ class Game {
       } else if (this.frame > this.maxFrames - 200) {
         this.gameSpeed = this.gameSpeed > 0 ? this.gameSpeed - 0.02 : 0;
       } else {
-        this.gameSpeed = parseFloat(1 + (3 * this.frame / (this.maxFrames-200))).toFixed(2); // Max 3
+        this.gameSpeed = parseFloat(1 + (2 * this.frame / (this.maxFrames-200))).toFixed(2); // Max 3
       }
       this.frame ++;
     }
@@ -151,7 +152,7 @@ class Game {
       this.setKeyValue(e.keyCode, null);
     } else {
       if (e.keyCode == 13) {
-        this.startGame();
+        this.beginGame();
       }
     }
   }
@@ -236,9 +237,14 @@ class Game {
     window.addEventListener("keyup", this.keyUp.bind(this), false);
   }
 
-  startGame() {
+  beginGame() {
 
-    this.cover.parentNode && this.cover.parentNode.removeChild(this.cover);
+    if (!this.started) {
+      this.cover.className += " toFadeOut";
+    }
+
+    this.started = true;
+
     const seconds = 1000 / this.framesXsecond;
     this.frame = 0;
     this.finished = false;
