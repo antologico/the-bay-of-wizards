@@ -11,15 +11,23 @@ class Player extends GameElement {
 
   loadSprites() {
     this.sprites['traveling'] = [];
-    for (let i=1; i<12; i++) {
-      this.sprites['traveling'].push(this.loadSprite('images/player/arzak' + i + '.png'));
+    for (let i=1; i<=8; i++) {
+      var image = this.loadSprite('images/player/player' + i + '.svg');
+      this.sprites['traveling'].push(image);
+      this.sprites['traveling'].push(image);
     }
+    const travelingSprites = this.sprites['traveling'].length;
+    for (let i=1; i<travelingSprites; i++) {
+      this.sprites['traveling'].push(this.sprites['traveling'][travelingSprites-i]);
+    //  this.sprites['traveling'].push(this.sprites['traveling'][travelingSprites-i]);
+    }
+
     this.sprites['moving'] = [];
-    this.sprites['moving']['up'] = this.loadSprite('images/player/arzak_up.png');
-    this.sprites['moving']['down'] = this.loadSprite('images/player/arzak_down.png');
-    this.sprites['moving']['right'] = this.loadSprite('images/player/arzak_right.png');
-    this.sprites['moving']['left'] = this.loadSprite('images/player/arzak_left.png');
-    this.sprites['collision'] = this.loadSprite('images/player/arzak_red.png');
+    this.sprites['moving']['up'] = this.loadSprite('images/player/player_up.svg');
+    this.sprites['moving']['down'] = this.loadSprite('images/player/player_down.svg');
+    this.sprites['moving']['right'] = this.loadSprite('images/player/player_right.svg');
+    this.sprites['moving']['left'] = this.loadSprite('images/player/player_left.svg');
+    this.sprites['collision'] = this.loadSprite('images/player/player_red.svg');
   }
 
   initPostion() {
