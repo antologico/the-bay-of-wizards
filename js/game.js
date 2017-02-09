@@ -18,6 +18,21 @@ class Game {
     this.itemsMin = 50;
     this.started = false;
     this.gameSpeed = 0;
+    this.loadSounds();
+  }
+
+  loadSounds() {
+    this.sounds = [];
+    this.sounds['ost'] = new Audio("sound/ost.mp3");
+    this.sounds['ost'].loop = true;
+    this.sounds['hit']  = new Audio("sound/hit.mp3");
+    this.sounds['hit'].volume = 0.5;
+    this.sounds['item']  = new Audio("sound/item.mp3");
+    this.sounds['item'].volume = 0.2;
+    this.sounds['waves']  = new Audio("sound/waves.mp3");
+    this.sounds['waves'].volume = 0.5;
+    this.sounds['waves'].loop = true;
+    this.sounds['cover']  = new Audio("sound/cover.mp3");
   }
 
   moveLeft() {
@@ -106,12 +121,16 @@ class Game {
         collision = this.player.testCollision(el);
         if (collision) {
           this.player.live -= 2;
+          this.sounds['hit'].play();
         }
       }
       if ((el.type == "item")) {
         if (this.player.testCollision(el) && !el.recolected) {
           el.recolected = true;
           this.player.items ++;
+          this.sounds['item'].pause();
+          this.sounds['item'].currentTime =  0;
+          this.sounds['item'].play();
         }
       }
       el.update(this.gameSpeed);
@@ -126,6 +145,13 @@ class Game {
       this.movePlayer();
       this.shortElements();
       this.detectCollisions();
+
+      if (this.frame < 2000) {
+          if (this.sounds['cover'].volume != 0) {
+            this.sounds['cover'].volume = (2000 - this.frame) / 2000;
+          }
+          this.sounds['ost'].volume = this.frame / 2000;
+      }
 
       if (this.frame < 100) {
         this.gameSpeed = this.gameSpeed < 1 ? this.gameSpeed + 0.01 : 1;
@@ -179,6 +205,7 @@ class Game {
 
   finish() {
     this.finished = true;
+    this.sounds['ost'].pause();
     clearInterval(this.drawElementsInterval);
     clearInterval(this.frameFunctionInterval);
     if (!this.testObjectives()) {
@@ -235,6 +262,8 @@ class Game {
 
     window.addEventListener("keydown", this.keyDown.bind(this), false);
     window.addEventListener("keyup", this.keyUp.bind(this), false);
+    this.sounds['cover'].play();
+
   }
 
   beginGame() {
@@ -242,6 +271,10 @@ class Game {
     if (!this.started) {
       this.cover.className += " toFadeOut";
     }
+
+    this.sounds['ost'].play();
+    this.sounds['waves'].play();
+    this.sounds['ost'].volume = 0;
 
     this.started = true;
 

@@ -140,6 +140,14 @@
 	<rect id="start31" x="663.073" y="144.278" opacity="0.42" fill="url(#SVGID_3_)" width="3.41" height="150"/>
 	<rect id="start32" x="663.073" y="300.834" fill="#FFFFFF" width="3.41" height="3.016"/>
 
+
+	<rect id="start41" x="600.073" y="144.278" opacity="0.42" fill="url(#SVGID_3_)" width="3.41" height="150"/>
+	<rect id="start42" x="600.073" y="300.834" fill="#FFFFFF" width="3.41" height="3.016"/>
+
+	<rect id="start51" x="110" y="221.041" opacity="0.42" fill="url(#SVGID_2_)" width="3.41" height="150"/>
+	<rect id="start52" x="110" y="377.597" fill="#FF0FFF" width="3.41" height="3.016"/>
+
+
 	<animate
 	    xlink:href="#start12"
 	    attributeName="y"
@@ -155,6 +163,23 @@
 			to="1000"
 			repeatCount="indefinite"
 			dur="10s" />
+
+			<animate
+			    xlink:href="#start52"
+			    attributeName="y"
+			    from="-100"
+			    to="1150"
+					repeatCount="indefinite"
+			    dur="12s" />
+
+				<animate
+					xlink:href="#start51"
+					attributeName="y"
+					from="-250"
+					to="1000"
+					repeatCount="indefinite"
+					dur="12s" />
+
 		<animate
 			    xlink:href="#start22"
 			    attributeName="y"
@@ -186,6 +211,23 @@
 							to="1000"
 							repeatCount="indefinite"
 							dur="9s" />
+
+
+							<animate
+												xlink:href="#start42"
+												attributeName="y"
+												from="-0"
+												to="550"
+												repeatCount="indefinite"
+												dur="5s" />
+
+							<animate
+												xlink:href="#start41"
+												attributeName="y"
+												from="-150"
+												to="400"
+												repeatCount="indefinite"
+												dur="5s" />
 
 	<g>
 		<path fill="#F5F5F6" d="M348.286,655.834c0,3.318-2.121,5.25-5.816,5.25h-3.38v4.43h-2.478v-14.697h5.858

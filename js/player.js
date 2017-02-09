@@ -17,9 +17,9 @@ class Player extends GameElement {
       this.sprites['traveling'].push(image);
     }
     const travelingSprites = this.sprites['traveling'].length;
+    
     for (let i=1; i<travelingSprites; i++) {
       this.sprites['traveling'].push(this.sprites['traveling'][travelingSprites-i]);
-    //  this.sprites['traveling'].push(this.sprites['traveling'][travelingSprites-i]);
     }
 
     this.sprites['moving'] = [];
