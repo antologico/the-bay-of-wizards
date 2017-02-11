@@ -216,7 +216,7 @@ class Game {
   }
 
   drawYouLoseTitle() {
-    const subtitle = 'Press enter to try again' + (this.frame >= this.maxFrames ? '. You need at last ' + this.itemsMin + ' jewels' : '');
+    const subtitle = 'Press enter to try again' + (this.frame >= this.maxFrames ? '. You need at least ' + this.itemsMin + ' jewels' : '');
 
     return ('<text width="300" text-align="center" y="410" text-anchor="middle" ' +
       'x="' + parseInt(this.scene.clientWidth/2) +'"' +
