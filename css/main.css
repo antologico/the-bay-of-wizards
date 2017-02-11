@@ -25,20 +25,30 @@ html, body {
   background-repeat: no-repeat;
   background-position: top left;
   position: absolute;
+  width: 100%;
 }
 
 #cover {
   position: absolute;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  background: #000;
+}
+
+#cover img {
+  max-height: 100%;
 }
 
 .container {
-  border-radius: 50%;
-  width:800px;
+  background-image: url(../images/background-line.svg);
   height: 800px;
   overflow: hidden;
   position: absolute;
-  left: calc(50% - 400px);
+  text-align: left;
+  left: 0;
   top: calc(50% - 400px);
+  width: 100%;
   text-align: left;
 }
 
@@ -50,4 +60,28 @@ body {
   text-align: center;
   width: 100%;
   height: 100%;
+}
+
+html
+{
+  zoom:50%
+}
+
+@media only screen and (min-height: 620px){
+  html{zoom:75%}
+  .container {
+    border-radius: 50px;
+    margin: 0 40px;
+    width: calc(100% - 80px);
+  }
+}
+
+@media only screen and (min-height: 850px)
+{
+  html{zoom:100%}
+  .container {
+    border-radius: 50%;
+    left: calc(50% - 400px);
+    width:800px;
+  }
 }

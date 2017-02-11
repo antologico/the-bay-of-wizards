@@ -33,6 +33,7 @@ class Game {
     this.sounds['waves'].volume = 0.5;
     this.sounds['waves'].loop = true;
     this.sounds['cover']  = new Audio("sound/cover.mp3");
+    this.sounds['cover'].loop = true;
   }
 
   moveLeft() {
