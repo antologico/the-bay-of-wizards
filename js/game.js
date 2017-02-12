@@ -159,7 +159,7 @@ class Game {
       } else if (this.frame > this.maxFrames - 200) {
         this.gameSpeed = this.gameSpeed > 0 ? this.gameSpeed - 0.02 : 0;
       } else {
-        this.gameSpeed = parseFloat(1 + (2 * this.frame / (this.maxFrames-200))).toFixed(2); // Max 3
+        this.gameSpeed = parseFloat(1 + (this.frame / (this.maxFrames-200))).toFixed(2); // Max 3
       }
       this.frame ++;
     }
