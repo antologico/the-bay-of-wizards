@@ -67,8 +67,17 @@ class Game {
 
       html += this.drawPlayerLive() + this.drawPlayerItems();
 
+      if (this.frame < 120) {
+          html += this.drawGameOptions();
+      }
+
       this.scene.draw(html);
     }
+  }
+
+  drawGameOptions() {
+    return ('<image x="' + (this.scene.clientWidth/2 - 150) + '" ' +
+      'y="300" height="150" width="300" xlink:href="images/game-options.svg" />');
   }
 
   drawPlayerLive() {
@@ -121,7 +130,7 @@ class Game {
       if ((el.type == "obstacle") && !collision) {
         collision = this.player.testCollision(el);
         if (collision) {
-          this.player.live -= 2;
+          this.player.live -= 1;
           this.sounds['hit'].play();
         }
       }

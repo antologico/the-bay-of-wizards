@@ -17,7 +17,7 @@ class Player extends GameElement {
       this.sprites['traveling'].push(image);
     }
     const travelingSprites = this.sprites['traveling'].length;
-    
+
     for (let i=1; i<travelingSprites; i++) {
       this.sprites['traveling'].push(this.sprites['traveling'][travelingSprites-i]);
     }
@@ -91,6 +91,8 @@ class Player extends GameElement {
       }
     }
 
+    this.shadowOpacity = maxJump / this.z;
+    this.shadowOffsetY = parseInt(this.z / 10);
     this.rotatingX = 0;
     this.rotatingY = 0;
   }
@@ -102,7 +104,7 @@ class Player extends GameElement {
   }
 
   testCollision(item) {
-    const radius = 5,
+    const radius = 20,
           white_space = 100;
     return this.testCollisionAxis(
             this.gameX,

@@ -9,15 +9,18 @@ class Item extends GameElement {
     this.heightBase = 100;
     this.heightMin  = 20;
     this.initPostion();
+    this.shadowOpacity = 1;
     this.loaded = true;
     this.recolected = false;
   }
 
   initPostion() {
     this.gameX = parseInt(this.scene.clientWidth * (1 + (Math.random() * 0.5)));
-    this.gameY = parseInt(Math.random() * 380);
+    this.gameY = 110;//parseInt(Math.random() * 380);
     this.image = this.sprites['free'];
     this.recolected = false;
+    this.shadowOffsetY = 0;
+    this.shadowOpacity = 1;
     this.z = parseInt(Math.random() * 200);
   }
 
@@ -25,6 +28,8 @@ class Item extends GameElement {
     if (this.gameX > -300) {
       if (this.recolected) {
         this.z +=20;
+        this.shadowOffsetY = parseInt(this.z / 10);
+        this.shadowOpacity = this.shadowOpacity > 0 ? this.shadowOpacity-0.1 : 0;
         this.image = this.sprites['recolected'];
       }
       this.gameX -= parseInt((10 + parseInt(this.gameY / 200)) * this.gameSpeed);

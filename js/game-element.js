@@ -21,6 +21,9 @@ class GameElement {
     this.rotatingX = 0;
     this.rotatingY = 0;
     this.gameSpeed = 1;
+    this.shadowColor = '#052e38'
+    this.shadowOpacity = 0.5;
+    this.shadowOffsetY = 0;
   }
 
   loadSprite(fileSrc) {
@@ -47,14 +50,14 @@ class GameElement {
   drawShadow() {
     const width = parseInt(this.width/2),
           offsetX = parseInt(this.width/5),
-          offsetY = parseInt(this.z / 6),
+          offsetY = parseInt(this.z / 0),
           height = parseInt(this.width/10);
-    return '<path d="M' + (this.shadowX) +',' + (this.shadowY  +  offsetY) +
+    return '<path d="M' + (this.shadowX) +',' + (this.shadowY + this.shadowOffsetY) +
       ' l' + width + ',' + height +
       ' ' + width + ',-' + height +
       ' -' + width + ',-' + height +
       ' -' + width + ',' + height +
-      '" style="fill:#052e38"/>';
+      '" style="fill:' + this.shadowColor + '" fill-opacity="' + this.shadowOpacity + '" />';
   }
 
   draw() {
