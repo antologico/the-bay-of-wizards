@@ -263,7 +263,7 @@ class Game {
     this.elements.push(new Stone(this.scene, 1));
 
 
-    for (let i=0; i<20; i++) {
+    for (let i=0; i<30; i++) {
       this.decorations.push(new WaterShine(this.scene));
     }
     this.decorations.push(new Bridge(this.scene, this.maxFrames));

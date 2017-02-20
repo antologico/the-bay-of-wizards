@@ -16,7 +16,7 @@ class Item extends GameElement {
 
   initPostion() {
     this.gameX = parseInt(this.scene.clientWidth * (1 + (Math.random() * 0.5)));
-    this.gameY = 110;//parseInt(Math.random() * 380);
+    this.gameY = parseInt(Math.random() * 380);
     this.image = this.sprites['free'];
     this.recolected = false;
     this.shadowOffsetY = 0;
