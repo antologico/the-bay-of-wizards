@@ -1,0 +1,123 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: black;
+}
+
+
+body {
+   font-size: 20px;
+   font-family: 'Montserrat Alternates', sans-serif;
+}
+
+
+input {
+     font-size: 20px;
+     width: 100%;
+     border: 2px solid green;
+}
+
+.container-block {
+  background: #111;
+  height: 800px;
+  min-width: 800px;
+  overflow: hidden;
+  position: absolute;
+  text-align: left;
+  top: calc(50% - 400px);
+  left:calc(50% - 400px);
+  width: 800px;
+  text-align: center;
+  overflow: hidden;
+  border-radius: 40px;
+  border-right: 2px solid #d20f83;
+  border-left: 2px solid #37a8db;
+  text-align: center;
+}
+
+.container {
+  width: 800px;
+  height: 800px;
+  margin: 0 auto;
+  display: inline-block;
+  position: relative;
+}
+
+.label {
+  color: gray;
+}
+
+.values {
+  min-height: 40px;
+  padding-left: 10px;
+  color: red;
+  boder: 1px solid red;
+}
+
+.bag {
+  position: absolute;
+  bottom: -60px;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background: rgba(0,0,0,0.2);
+  padding: 10px;
+}
+
+.bag:hover {
+  bottom: 0;
+}
+
+.board {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 800px;
+  height: 600px;
+}
+
+.boardElement {
+  position: absolute;
+  cursor: pointer;
+}
+
+.bagElement {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #37a8db;
+  border: 2px solid #37a8db;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.bagElement:hover {
+  background: #d20f83;
+}
+
+.bagElement:hover,
+.bagElement.selected {
+  border: 2px solid #d20f83;
+}
+
+.message {
+  z-index: 10;
+  top: 0;
+  right: 0;
+  padding-top: 40px;
+  left: 0;
+  font-size: 15px;
+  text-align: center;
+  position: absolute;
+}
+
+@media only screen and (min-height: 620px){
+  html{zoom:75%}
+}
+
+@media only screen and (min-height: 850px)
+{
+  html{zoom:100%}
+}

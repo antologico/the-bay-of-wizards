@@ -1,0 +1,16 @@
+{
+  "version": "0.0.1",
+  "name": "the-bay-of-wizards-chapter-2",
+  "description": "the-bay-of-wizards-chapter-2",
+  "dependencies": {
+    "redux": "~3.7.2"
+  },
+  "contributors": [
+    {
+      "name": "Anto",
+      "email": "fantonio.juan@gmail.com"
+    }
+  ],
+  "analyze": true,
+  "license": "MIT"
+}

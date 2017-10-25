@@ -1,0 +1,84 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.toFadeOut {
+    -webkit-animation: fadeout 3s linear forwards;
+    animation: fadeout 3s linear forwards;
+}
+
+@-webkit-keyframes fadeout {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes fadeout {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+#scene {
+  background-image: url(../images/background.svg);
+  background-repeat: no-repeat;
+  background-position: top left;
+  position: absolute;
+  width: 100%;
+}
+
+#cover {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  background: #000;
+  padding-bottom: 10px;
+}
+
+#cover img {
+  max-height: 100%;
+  border-radius: 50%;
+}
+
+.container {
+  background-image: url(../images/background-line.svg);
+  height: 800px;
+  overflow: hidden;
+  position: absolute;
+  text-align: left;
+  left: 0;
+  top: calc(50% - 400px);
+  width: calc(100% - 4px);
+  text-align: left;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  overflow: hidden;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+html
+{
+  zoom:50%
+}
+
+@media only screen and (min-height: 620px){
+  html{zoom:75%}
+  .container {
+    border-radius: 50px;
+    margin: 0 40px;
+    width: calc(100% - 80px);
+  }
+}
+
+@media only screen and (min-height: 850px)
+{
+  html{zoom:100%}
+}

@@ -1,0 +1,28 @@
+<html>
+<head>
+  <title>The bay of wizards: Chapter One</title>
+  <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/main.css"></head>
+</head>
+<body>
+  <div class="container">
+    <svg type="image/svg+xml" width="100%" height="800" id="scene"></svg>
+    <div id="cover"><img src="images/cover.svg"></svg></div>
+  </div>
+</body>
+<script language="javascript" src="js/scene.js"></script>
+<script language="javascript" src="js/game-element.js"></script>
+<script language="javascript" src="js/water-shine.js"></script>
+<script language="javascript" src="js/player.js"></script>
+<script language="javascript" src="js/obstacle.js"></script>
+<script language="javascript" src="js/stone.js"></script>
+<script language="javascript" src="js/item.js"></script>
+<script language="javascript" src="js/bridge.js"></script>
+<script language="javascript" src="js/game.js"></script>
+<script language="javascript" src="js/sound.js"></script>
+<script>
+  const game = new Game('scene', 'cover');
+  game.init();
+</script>
+</html>
