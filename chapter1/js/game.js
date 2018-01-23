@@ -180,6 +180,7 @@ class Game {
   }
 
   keyDown(e) {
+    console.log(e)
     this.setKeyValue(e.keyCode, 1);
   }
 
@@ -275,6 +276,27 @@ class Game {
 
     window.addEventListener("keydown", this.keyDown.bind(this), false);
     window.addEventListener("keyup", this.keyUp.bind(this), false);
+
+    const zones = [
+      { id: 'topRight', keys: [38, 39] },
+      { id: 'bottomRight', keys: [40, 39] },
+      { id: 'middleRight', keys: [32] },
+
+      { id: 'topLeft', keys: [38, 37] },
+      { id: 'bottomLeft', keys: [40, 37] },
+      { id: 'middleLeft', keys: [32] },
+
+      { id: 'center', keys: [13] },
+    ]
+
+    for (let zone of zones) {
+      const el = document.getElementById(zone.id)
+      for (let key of zone.keys) {
+        el.addEventListener("mousedown", this.keyDown.bind(this, { keyCode: key }), false);
+        el.addEventListener("mouseup", this.keyUp.bind(this, { keyCode: key }), false);
+      }
+    }
+
     this.sounds['cover'].play();
 
   }

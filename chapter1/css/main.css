@@ -82,3 +82,68 @@ html
 {
   html{zoom:100%}
 }
+
+#topLeft {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 33%;
+  z-index: 100;
+  width: 35%;
+}
+
+#middleLeft {
+  position: absolute;
+  top: 33%;
+  left: 0;
+  width: 35%;
+  height: 34%;
+  z-index: 100;
+}
+
+#bottomLeft {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 35%;
+  height: 33%;
+  z-index: 100;
+}
+
+#topRight {
+  position: absolute;
+  top: 0;
+  left: 65%;
+  height: 33%;
+  z-index: 100;
+  width: 35%;
+}
+
+#middleRight {
+  position: absolute;
+  top: 33%;
+  left: 65%;
+  width: 35%;
+  height: 34%;
+  z-index: 100;
+}
+
+
+#bottomRight {
+  position: absolute;
+  bottom: 0;
+  left: 65%;
+  width: 35%;
+  height: 33%;
+  z-index: 100;
+}
+
+
+#center {
+  position: absolute;
+  top: 0;
+  left: 35%;
+  width: 30%;
+  height: 100%;
+  z-index: 100;
+}
