@@ -292,10 +292,10 @@ class Game {
     for (let zone of zones) {
       const el = document.getElementById(zone.id)
       for (let key of zone.keys) {
-        el.addEventListener("mousedown", this.keyDown.bind(this, { keyCode: key }), false);
-        el.addEventListener("mouseup", this.keyUp.bind(this, { keyCode: key }), false);
-          el.addEventListener("touchstart", this.keyDown.bind(this, { keyCode: key }), false);
-          el.addEventListener("touchend", this.keyUp.bind(this, { keyCode: key }), false);
+        // el.addEventListener("mousedown", this.keyDown.bind(this, { keyCode: key }), false);
+        // el.addEventListener("mouseup", this.keyUp.bind(this, { keyCode: key }), false);
+        el.addEventListener("touchstart", this.keyDown.bind(this, { keyCode: key }), false);
+        el.addEventListener("touchend", this.keyUp.bind(this, { keyCode: key }), false);
       }
     }
 
