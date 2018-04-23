@@ -26,6 +26,7 @@ html, body {
   background-position: top left;
   position: absolute;
   width: 100%;
+  will-change: contents;
 }
 
 #cover {

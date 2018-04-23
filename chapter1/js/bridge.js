@@ -38,7 +38,7 @@ class Bridge extends GameElement {
         ' ' + (-(this.widthBase + 30)) + ',-75"' +
         ' style="fill:#13235B"/> '+
       '<image ' +
-        'x="' + (this.gameX + parseInt(this.widthBase) - 345) + '" ' +
+        'x="' + (this.gameX + parseInt(this.widthBase) - 190) + '" ' +
         'y="250" ' +
         'height="100" ' +
         'xlink:href="' + this.image.src + '" />';

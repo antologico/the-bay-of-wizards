@@ -3,7 +3,6 @@ class Game {
   constructor(elementId, coverId) {
     this.cover = document.getElementById(coverId);
     this.scene = new Scene(document.getElementById(elementId));
-    this.maxWidth =
     this.elements = [];
     this.decorations = [];
     this.prevElements = [];
@@ -18,6 +17,8 @@ class Game {
     this.itemsMin = 50;
     this.started = false;
     this.gameSpeed = 0;
+    this.ended = true;
+    this.seconds = 1000 / this.framesXsecond;
     this.loadSounds();
   }
 
@@ -56,13 +57,13 @@ class Game {
     if (!this.finished) {
       let html = "";
       for(var i = 0; i < this.elements.length; i++) {
-        html += this.elements[i].drawShadow();
+        html += this.elements[i].drawElementShadow();
       }
       for(var i = 0; i < this.decorations.length; i++) {
-        html += this.decorations[i].draw();
+        html += this.decorations[i].drawElement();
       }
       for(var i = 0; i < this.elements.length; i++) {
-        html += this.elements[i].draw();
+        html += this.elements[i].drawElement();
       }
 
       html += this.drawPlayerLive() + this.drawPlayerItems();
@@ -73,6 +74,8 @@ class Game {
 
       this.scene.draw(html);
     }
+
+    if(!this.ended) this.drawElementsInterval = requestAnimationFrame(this.drawElements.bind(this), this.seconds);
   }
 
   drawGameOptions() {
@@ -174,13 +177,19 @@ class Game {
     }
 
     // 4 minutes
-    if ((this.frame > this.maxFrames) || (this.player.live < 0)) {
+    this.ended = this.isEnded()
+    if (this.ended) {
       this.finish();
+    } else {
+      this.frameFunctionInterval = requestAnimationFrame(this.frameFunction.bind(this), this.seconds);
     }
   }
 
+  isEnded() {
+    return (this.frame > this.maxFrames) || (this.player.live < 0)
+  }
+
   keyDown(e) {
-    console.log(e)
     this.setKeyValue(e.keyCode, 1);
   }
 
@@ -220,8 +229,8 @@ class Game {
   finish() {
     this.finished = true;
     this.sounds['ost'].pause();
-    clearInterval(this.drawElementsInterval);
-    clearInterval(this.frameFunctionInterval);
+    cancelAnimationFrame(this.drawElementsInterval);
+    cancelAnimationFrame(this.frameFunctionInterval);
     if (!this.testObjectives()) {
       this.scene.add(this.drawYouLoseTitle());
     } else {
@@ -272,8 +281,6 @@ class Game {
     }
     this.decorations.push(new Bridge(this.scene, this.maxFrames));
 
-    console.log('init', this.scene.clientWidth + 'x' + this.scene.clientHeight);
-
     window.addEventListener("keydown", this.keyDown.bind(this), false);
     window.addEventListener("keyup", this.keyUp.bind(this), false);
 
@@ -315,7 +322,6 @@ class Game {
 
     this.started = true;
 
-    const seconds = 1000 / this.framesXsecond;
     this.frame = 0;
     this.finished = false;
     this.gameSpeed = 0;
@@ -328,7 +334,7 @@ class Game {
       this.decorations[i].initPostion();
     }
 
-    this.frameFunctionInterval = setInterval(this.frameFunction.bind(this), seconds);
-    this.drawElementsInterval = setInterval(this.drawElements.bind(this), seconds);
+    this.frameFunctionInterval = requestAnimationFrame(this.frameFunction.bind(this), this.seconds);
+    this.drawElementsInterval = requestAnimationFrame(this.drawElements.bind(this), this.seconds);
   }
 }

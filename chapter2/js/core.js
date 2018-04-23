@@ -77,6 +77,10 @@ function gotTo(state, location) {
 }
 
 function perform(state = initalState, action) {
+  if (state.end) {
+    console.log('FIN!')
+    return state
+  }
   switch (action.type) {
     case 'GOTO':
       const loc = gotTo(state, action.subject)

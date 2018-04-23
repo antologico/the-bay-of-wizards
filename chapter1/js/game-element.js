@@ -24,6 +24,9 @@ class GameElement {
     this.shadowColor = '#052e38'
     this.shadowOpacity = 0.5;
     this.shadowOffsetY = 0;
+    this.cache = null;
+    this.cacheShadow = null;
+    this.updated = false;
   }
 
   loadSprite(fileSrc) {
@@ -36,15 +39,36 @@ class GameElement {
     // Complete in child
   }
 
+  getState() {
+    return {
+      x: this.y,
+      y: this.y,
+      z: this.z,
+      rotatingDegree: this.rotatingDegree,
+      rotatingX: this.rotatingX,
+      rotatingY: this.rotatingX,
+      image: this.image.src
+    }
+  }
+
   update(gameSpeed = 1) {
+    this.prevValues = this.getState();
+    this.updatePosition();
     this.x = parseInt(this.gameX - (this.width / 2));
     this.y = parseInt(this.gameY + 400 - this.height);
     this.shadowX = this.x;
     this.shadowY = parseInt(this.gameY + 400);
-    this.updatePosition();
     this.height = parseInt(this.heightMin + (this.gameY * 0.3));
     this.width = parseInt(this.widthBase * this.height / this.heightBase);
     this.gameSpeed = gameSpeed;
+    this.updated = this.prevValues == this.getState()
+  }
+
+  drawElementShadow() {
+    if (!this.cacheShadow || !this.updated) {
+      this.cacheShadow = this.drawShadow()
+    }
+    return this.cacheShadow
   }
 
   drawShadow() {
@@ -58,6 +82,13 @@ class GameElement {
       ' -' + width + ',-' + height +
       ' -' + width + ',' + height +
       '" style="fill:' + this.shadowColor + '" fill-opacity="' + this.shadowOpacity + '" />';
+  }
+
+  drawElement() {
+    if (!this.cache || !this.updated) {
+      this.cache = this.draw()
+    }
+    return this.cache
   }
 
   draw() {
