@@ -11,7 +11,7 @@ class Game {
     this.drawElementsInterval = null;
     this.gameKeys = [null, null, null, null];
     this.collisions = 0;
-    this.maxFrames = 3200; // 2 minutes
+    this.maxFrames = 200; // 2 minutes
     this.frame = 0;
     this.finished = true;
     this.itemsMin = 50;
@@ -34,7 +34,11 @@ class Game {
     this.sounds['waves'].volume = 0.5;
     this.sounds['waves'].loop = true;
     this.sounds['cover']  = new Audio("sound/cover.mp3");
+    this.sounds['cover'].autoplay = true;
     this.sounds['cover'].loop = true;
+    this.sounds['cover'].onloadeddata = function() {
+      this.sounds['cover'].play(); 
+    }.bind(this)
   }
 
   moveLeft() {
@@ -88,12 +92,12 @@ class Game {
       live = live > 0 ? live : 0
       return ('<text width="300" text-align="center" y="55" text-anchor="middle" x="' + parseInt(this.scene.clientWidth/2) +'"' +
         'font-family="Montserrat Alternates" fill="#FFFFFF" font-size="45">' + live +
-        '<tspan font-size="40">&hearts;</tspan></text>');
+        '<tspan font-size="40"> &#x2661;</tspan></text>');
   }
 
   drawPlayerItems() {
       return ('<text width="300" text-align="center" y="80" text-anchor="middle" x="' + parseInt(this.scene.clientWidth/2) +'"' +
-        'font-family="Montserrat Alternates" fill="#FFFF00" font-size="20">&#9830; ' + this.player.items + ' / 50</text>');
+        'font-family="Montserrat Alternates" fill="#FFFF00" font-size="20">&#9672; ' + this.player.items + ' / 50</text>');
   }
 
   movePlayer() {
@@ -116,7 +120,7 @@ class Game {
 
   shortElements() {
     this.elements.sort(function(a, b) {
-      return a.gameY >= b.gameY;
+      return a.gameY - b.gameY;
     });
     for(var i = 0; i < this.decorations.length; i++) {
       this.decorations[i].update(this.gameSpeed);
@@ -261,6 +265,32 @@ class Game {
     return (this.player.live > 0) && (this.player.items >= this.itemsMin);
   }
 
+initKeys() {
+  window.addEventListener("keydown", this.keyDown.bind(this), false);
+  window.addEventListener("keyup", this.keyUp.bind(this), false);
+
+  const zones = [
+    { id: 'topRight', keys: [38, 39] },
+    { id: 'bottomRight', keys: [40, 39] },
+    { id: 'middleRight', keys: [32] },
+
+    { id: 'topLeft', keys: [38, 37] },
+    { id: 'bottomLeft', keys: [40, 37] },
+    { id: 'middleLeft', keys: [32] },
+
+    { id: 'center', keys: [13] },
+  ]
+
+  for (let zone of zones) {
+    const el = document.getElementById(zone.id)
+    for (let key of zone.keys) {
+      el.addEventListener("touchstart", this.keyDown.bind(this, { keyCode: key }), false);
+      el.addEventListener("touchend", this.keyUp.bind(this, { keyCode: key }), false);
+    }
+  }
+
+}
+
   init() {
     this.player = new Player(this.scene);
     this.elements.push(this.player);
@@ -274,6 +304,8 @@ class Game {
 
     this.elements.push(new Stone(this.scene, 0));
     this.elements.push(new Stone(this.scene, 1));
+    
+    this.elements.push(new Cloud(this.scene, 1));
 
 
     for (let i=0; i<30; i++) {
@@ -281,33 +313,7 @@ class Game {
     }
     this.decorations.push(new Bridge(this.scene, this.maxFrames));
 
-    window.addEventListener("keydown", this.keyDown.bind(this), false);
-    window.addEventListener("keyup", this.keyUp.bind(this), false);
-
-    const zones = [
-      { id: 'topRight', keys: [38, 39] },
-      { id: 'bottomRight', keys: [40, 39] },
-      { id: 'middleRight', keys: [32] },
-
-      { id: 'topLeft', keys: [38, 37] },
-      { id: 'bottomLeft', keys: [40, 37] },
-      { id: 'middleLeft', keys: [32] },
-
-      { id: 'center', keys: [13] },
-    ]
-
-    for (let zone of zones) {
-      const el = document.getElementById(zone.id)
-      for (let key of zone.keys) {
-        // el.addEventListener("mousedown", this.keyDown.bind(this, { keyCode: key }), false);
-        // el.addEventListener("mouseup", this.keyUp.bind(this, { keyCode: key }), false);
-        el.addEventListener("touchstart", this.keyDown.bind(this, { keyCode: key }), false);
-        el.addEventListener("touchend", this.keyUp.bind(this, { keyCode: key }), false);
-      }
-    }
-
-    this.sounds['cover'].play();
-
+    this.initKeys()
   }
 
   beginGame() {
@@ -333,6 +339,7 @@ class Game {
     for(var i = 0; i < this.decorations.length; i++) {
       this.decorations[i].initPostion();
     }
+
 
     this.frameFunctionInterval = requestAnimationFrame(this.frameFunction.bind(this), this.seconds);
     this.drawElementsInterval = requestAnimationFrame(this.drawElements.bind(this), this.seconds);

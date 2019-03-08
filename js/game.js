@@ -113,7 +113,7 @@ class Game {
 
   shortElements() {
     this.elements.sort(function(a, b) {
-      return a.gameY >= b.gameY;
+      return a.gameY > b.gameY;
     });
     for(var i = 0; i < this.decorations.length; i++) {
       this.decorations[i].update(this.gameSpeed);

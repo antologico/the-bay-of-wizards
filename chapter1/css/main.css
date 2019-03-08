@@ -44,7 +44,6 @@ html, body {
 }
 
 .container {
-  background-image: url(../images/background-line.svg);
   height: 800px;
   overflow: hidden;
   position: absolute;
@@ -63,25 +62,29 @@ body {
   text-align: center;
   width: 100%;
   height: 100%;
+  display: flex;
+  background: linear-gradient(-45deg, #000, rgb(108, 26, 58), rgb(20, 71, 90), rgb(25, 14, 95));
+	background-size: 400% 400%;
+	-webkit-animation: Gradient 7s ease infinite;
+	-moz-animation: Gradient 7s ease infinite;
+	animation: Gradient 7s ease infinite;
 }
 
 html
 {
-  zoom:50%
+  zoom:75%
 }
 
-@media only screen and (min-height: 620px){
-  html{zoom:75%}
-  .container {
-    border-radius: 50px;
-    margin: 0 40px;
-    width: calc(100% - 80px);
-  }
-}
-
-@media only screen and (min-height: 850px)
+@media only screen and (min-height: 800px)
 {
   html{zoom:100%}
+  .container {
+    border-radius: 50%;
+    max-width: 800px;
+    position: relative;
+    display: inline-block;
+    margin: 0 auto;
+  }
 }
 
 #topLeft {
@@ -147,4 +150,40 @@ html
   width: 30%;
   height: 100%;
   z-index: 100;
+}
+
+@-webkit-keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+@-moz-keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+@keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
 }
