@@ -12,7 +12,7 @@ class Player extends GameElement {
   loadSprites() {
     this.sprites['traveling'] = [];
     for (let i=1; i<=8; i++) {
-      var image = this.loadSprite('images/player/player' + i + '.svg');
+      var image = this.loadSprite('./images/player/player' + i + '.svg');
       this.sprites['traveling'].push(image);
       this.sprites['traveling'].push(image);
     }
@@ -23,11 +23,11 @@ class Player extends GameElement {
     }
 
     this.sprites['moving'] = [];
-    this.sprites['moving']['up'] = this.loadSprite('images/player/player_up.svg');
-    this.sprites['moving']['down'] = this.loadSprite('images/player/player_down.svg');
-    this.sprites['moving']['right'] = this.loadSprite('images/player/player_right.svg');
-    this.sprites['moving']['left'] = this.loadSprite('images/player/player_left.svg');
-    this.sprites['collision'] = this.loadSprite('images/player/player_red.svg');
+    this.sprites['moving']['up'] = this.loadSprite('./images/player/player_up.svg');
+    this.sprites['moving']['down'] = this.loadSprite('./images/player/player_down.svg');
+    this.sprites['moving']['right'] = this.loadSprite('./images/player/player_right.svg');
+    this.sprites['moving']['left'] = this.loadSprite('./images/player/player_left.svg');
+    this.sprites['collision'] = this.loadSprite('./images/player/player_red.svg');
   }
 
   initPostion() {

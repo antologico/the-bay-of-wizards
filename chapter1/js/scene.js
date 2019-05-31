@@ -6,6 +6,7 @@ class Scene {
   }
 
   draw(html) {
+    this.element.style.display = 'block';
     this.element.innerHTML = html;
   }
 

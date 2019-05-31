@@ -11,20 +11,20 @@ class Game {
     this.drawElementsInterval = null;
     this.gameKeys = [null, null, null, null];
     this.collisions = 0;
-    this.maxFrames = 200; // 2 minutes
+    this.maxFrames = 3600; // 2 minutes
     this.frame = 0;
     this.finished = true;
     this.itemsMin = 50;
     this.started = false;
     this.gameSpeed = 0;
     this.ended = true;
-    this.seconds = 1000 / this.framesXsecond;
+    this.seconds = 1 / this.framesXsecond;
     this.loadSounds();
   }
 
   loadSounds() {
     this.sounds = [];
-    this.sounds['ost'] = new Audio("sound/ost.mp3");
+    this.sounds['ost'] = new Audio("./sound/ost.mp3");
     this.sounds['ost'].loop = true;
     this.sounds['hit']  = new Audio("sound/hit.mp3");
     this.sounds['hit'].volume = 0.5;
@@ -34,11 +34,14 @@ class Game {
     this.sounds['waves'].volume = 0.5;
     this.sounds['waves'].loop = true;
     this.sounds['cover']  = new Audio("sound/cover.mp3");
-    this.sounds['cover'].autoplay = true;
-    this.sounds['cover'].loop = true;
-    this.sounds['cover'].onloadeddata = function() {
-      this.sounds['cover'].play(); 
-    }.bind(this)
+    const promise = this.sounds['cover'].play();
+    if (promise !== undefined) {
+      promise.then(_ => {
+        console.log('Autoplay started!')
+      }).catch(error => {
+        console.log('Autoplay was prevented');
+      });
+    }
   }
 
   moveLeft() {

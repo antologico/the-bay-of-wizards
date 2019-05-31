@@ -27,6 +27,7 @@ html, body {
   position: absolute;
   width: 100%;
   will-change: contents;
+  display: none;
 }
 
 #cover {
@@ -34,7 +35,6 @@ html, body {
   left: 0;
   width: 100%;
   text-align: center;
-  background: #000;
   padding-bottom: 10px;
 }
 

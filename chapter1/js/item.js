@@ -3,8 +3,8 @@ class Item extends GameElement {
     super(scene);
     this.type = 'item';
     this.sprites = [];
-    this.sprites['free'] = this.loadSprite('images/jewel/jewel_free.svg');
-    this.sprites['recolected'] = this.loadSprite('images/jewel/jewel_recolected.svg');
+    this.sprites['free'] = this.loadSprite('./images/jewel/jewel_free.svg');
+    this.sprites['recolected'] = this.loadSprite('./images/jewel/jewel_recolected.svg');
     this.widthBase  = 80;
     this.heightBase = 100;
     this.heightMin  = 20;
