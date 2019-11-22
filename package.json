@@ -1,5 +1,11 @@
 {
   "version": "0.0.1",
   "name": "the-bay-of-wizards",
-  "description": "the-bay-of-wizards"
+  "description": "the-bay-of-wizards",
+  "author": [
+    {
+      "name": "Anto",
+      "email": "antonio.juan@gmail.com"
+    }
+  ]
 }
