@@ -1,6 +1,5 @@
 {
-  "dependencies": {
-    "http-server": "^0.11.1",
-    "install": "^0.12.2"
-  }
+  "version": "0.0.1",
+  "name": "the-bay-of-wizards",
+  "description": "the-bay-of-wizards"
 }
